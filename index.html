@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MEYDEN NATURAL CRM</title>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <style>
 :root{
   --bg:#060708;
@@ -51,9 +53,7 @@ header{
   backdrop-filter:blur(10px);
 }
 
-.brand{
-  display:block;
-}
+.brand{display:block}
 
 .eyebrow{
   color:#ffb17a;
@@ -77,9 +77,7 @@ h1{
   font-size:.95rem;
 }
 
-main{
-  padding:18px 0 34px;
-}
+main{padding:18px 0 34px}
 
 .panel{
   background:linear-gradient(180deg,rgba(27,31,39,.95),rgba(13,15,20,.96));
@@ -229,9 +227,7 @@ h3{
   font-size:1.1rem;
 }
 
-p{
-  color:var(--muted);
-}
+p{color:var(--muted)}
 
 label{
   display:block;
@@ -427,9 +423,7 @@ button.danger{
   color:var(--muted);
 }
 
-.hidden{
-  display:none!important;
-}
+.hidden{display:none!important}
 
 .advanced{
   margin-top:12px;
@@ -507,6 +501,133 @@ footer{
   display:none;
   background:#fff;
   color:#111;
+}
+
+/* Document PDF final propre */
+.pdfFinalDoc{
+  width:794px;
+  background:#ffffff;
+  color:#111111;
+  font-family:Arial,Helvetica,sans-serif;
+  padding:34px;
+  line-height:1.45;
+}
+
+.pdfCover{
+  border-bottom:4px solid #111;
+  padding-bottom:18px;
+  margin-bottom:22px;
+}
+
+.pdfKicker{
+  color:#ff6a00;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:12px;
+  font-weight:900;
+}
+
+.pdfMainTitle{
+  font-size:30px;
+  line-height:1.08;
+  margin:8px 0 6px;
+  text-transform:uppercase;
+  font-weight:900;
+}
+
+.pdfMeta{
+  color:#555;
+  font-size:12px;
+}
+
+.pdfSectionFinal{
+  margin:20px 0;
+}
+
+.pdfSectionFinal h2{
+  font-size:18px;
+  margin:0 0 8px;
+  padding-bottom:5px;
+  border-bottom:2px solid #111;
+  color:#111;
+}
+
+.pdfIntroBox{
+  background:#f4f4f4;
+  border-left:5px solid #ff6a00;
+  padding:12px;
+  border-radius:8px;
+  font-size:13px;
+}
+
+.pdfStatsGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:12px 0;
+}
+
+.pdfStatBox{
+  border:1px solid #ccc;
+  border-radius:8px;
+  padding:10px;
+  text-align:center;
+}
+
+.pdfStatBox b{
+  display:block;
+  font-size:22px;
+}
+
+.pdfStatBox span{
+  font-size:11px;
+  color:#555;
+}
+
+.pdfActionList{
+  padding-left:18px;
+  font-size:13px;
+}
+
+.pdfActionList li{
+  margin-bottom:7px;
+}
+
+.pdfTableClean{
+  width:100%;
+  border-collapse:collapse;
+  font-size:10px;
+  margin-top:8px;
+}
+
+.pdfTableClean th,
+.pdfTableClean td{
+  border:1px solid #cfcfcf;
+  padding:6px;
+  vertical-align:top;
+}
+
+.pdfTableClean th{
+  background:#eeeeee;
+  font-weight:900;
+}
+
+.pdfSmallNote{
+  font-size:11px;
+  color:#555;
+}
+
+.pdfPageBreak{
+  page-break-before:always;
+  break-before:page;
+}
+
+.pdfFooterNote{
+  margin-top:24px;
+  padding-top:10px;
+  border-top:1px solid #ccc;
+  font-size:10px;
+  color:#666;
 }
 
 @media print{
@@ -745,10 +866,10 @@ outil de travail"></textarea>
         <h3>Exporter</h3>
       </div>
 
-      <p>Génère un rapport PDF propre, un CSV, un JSON ou un bloc pour le CRM.</p>
+      <p>Génère une fiche PDF finale propre, un CSV, un JSON ou un bloc pour le CRM.</p>
 
       <div class="btns">
-        <button class="good" onclick="printReport()">Rapport PDF</button>
+        <button class="good" onclick="downloadFinalPDF()">Télécharger PDF final</button>
         <button onclick="generateCRMBlock()">Bloc CRM</button>
         <button class="secondary" onclick="downloadCSV()">CSV</button>
         <button class="secondary" onclick="downloadJSON()">JSON</button>
@@ -760,6 +881,7 @@ outil de travail"></textarea>
       <div class="btns">
         <button class="secondary" onclick="copyCRM()">Copier bloc CRM</button>
         <button class="secondary" onclick="downloadTXT()">TXT</button>
+        <button class="secondary" onclick="printReport()">PDF secours impression</button>
       </div>
     </div>
 
@@ -1592,6 +1714,222 @@ async function copyText(text){
   }catch(e){
     prompt("Copie manuelle :", text);
   }
+}
+
+function buildFinalPDFHTML(){
+  if(!document.getElementById("crmOutput").value.trim()){
+    generateCRMBlock();
+  }
+
+  const now = new Date().toLocaleString("fr-CA");
+  const p1 = contacts.filter(c => c.priority === "Priorité 1");
+  const p2 = contacts.filter(c => c.priority === "Priorité 2");
+  const p3 = contacts.filter(c => c.priority === "Priorité 3");
+
+  const cleanRows = contacts.map((c,i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td><b>${esc(c.name)}</b></td>
+      <td>${esc(c.category)}</td>
+      <td>${esc(c.priority)}</td>
+      <td>${esc(c.status)}</td>
+      <td>${esc(c.action)}</td>
+      <td>${esc(c.notes)}</td>
+    </tr>
+  `).join("");
+
+  const priorityRows = p1.map((c,i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td><b>${esc(c.name)}</b></td>
+      <td>${esc(c.category)}</td>
+      <td>${esc(c.action)}</td>
+      <td>${esc(c.link)}</td>
+    </tr>
+  `).join("");
+
+  const rejectedText = rejected.length ? rejected.map(r => `<li>${esc(r)}</li>`).join("") : "<li>Aucun rejet.</li>";
+
+  return `
+    <div class="pdfFinalDoc">
+
+      <div class="pdfCover">
+        <div class="pdfKicker">Meyden — Mouvement Artistique du Québec</div>
+        <div class="pdfMainTitle">Fiche finale — Meyden Natural CRM</div>
+        <div class="pdfMeta">
+          Généré le ${esc(now)}<br>
+          Source : ${esc(getSource())}<br>
+          Événement lié : ${esc(getEvent()) || "Non spécifié"}
+          ${lastFile ? "<br>Fichier importé : " + esc(lastFile.name) : ""}
+        </div>
+      </div>
+
+      <div class="pdfSectionFinal">
+        <h2>1. Résumé clair</h2>
+        <div class="pdfIntroBox">
+          Cette fiche transforme une liste brute en contacts propres, classés et utilisables.
+          Elle sert à comprendre rapidement qui mérite un suivi, quelles actions poser,
+          et quelles entrées ont été rejetées par le système.
+        </div>
+
+        <div class="pdfStatsGrid">
+          <div class="pdfStatBox"><b>${contacts.length + rejected.length}</b><span>Total détecté</span></div>
+          <div class="pdfStatBox"><b>${contacts.length}</b><span>Contacts propres</span></div>
+          <div class="pdfStatBox"><b>${p1.length}</b><span>Priorité 1</span></div>
+          <div class="pdfStatBox"><b>${rejected.length}</b><span>Rejetés</span></div>
+        </div>
+      </div>
+
+      <div class="pdfSectionFinal">
+        <h2>2. Lecture rapide</h2>
+        <ul class="pdfActionList">
+          <li><b>Priorité 1 :</b> contacts à traiter rapidement. Ce sont les profils les plus utiles pour Meyden : artistes, partenaires, lieux, médias, studios ou collaborateurs stratégiques.</li>
+          <li><b>Priorité 2 :</b> contacts intéressants à garder en suivi, souvent liés au contenu, au visuel, au merch ou au soutien créatif.</li>
+          <li><b>Priorité 3 :</b> contacts à qualifier plus tard ou profils publics moins urgents.</li>
+        </ul>
+      </div>
+
+      <div class="pdfSectionFinal">
+        <h2>3. Répartition</h2>
+        <div class="pdfStatsGrid">
+          <div class="pdfStatBox"><b>${p1.length}</b><span>Priorité 1</span></div>
+          <div class="pdfStatBox"><b>${p2.length}</b><span>Priorité 2</span></div>
+          <div class="pdfStatBox"><b>${p3.length}</b><span>Priorité 3</span></div>
+          <div class="pdfStatBox"><b>${contacts.length}</b><span>Total propre</span></div>
+        </div>
+      </div>
+
+      <div class="pdfSectionFinal">
+        <h2>4. Actions prioritaires</h2>
+        ${
+          p1.length
+          ? `
+          <table class="pdfTableClean">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Contact</th>
+                <th>Catégorie</th>
+                <th>Action recommandée</th>
+                <th>Lien avec Meyden</th>
+              </tr>
+            </thead>
+            <tbody>${priorityRows}</tbody>
+          </table>
+          `
+          : `<div class="pdfIntroBox">Aucune priorité 1 détectée pour le moment.</div>`
+        }
+      </div>
+
+      <div class="pdfPageBreak"></div>
+
+      <div class="pdfSectionFinal">
+        <h2>5. Tous les contacts préparés</h2>
+        ${
+          contacts.length
+          ? `
+          <table class="pdfTableClean">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Catégorie</th>
+                <th>Priorité</th>
+                <th>Statut</th>
+                <th>Action</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>${cleanRows}</tbody>
+          </table>
+          `
+          : `<div class="pdfIntroBox">Aucun contact préparé.</div>`
+        }
+      </div>
+
+      <div class="pdfSectionFinal">
+        <h2>6. Entrées rejetées</h2>
+        <ul class="pdfActionList">${rejectedText}</ul>
+      </div>
+
+      <div class="pdfSectionFinal">
+        <h2>7. Prochaine étape recommandée</h2>
+        <div class="pdfIntroBox">
+          Commencer par les contacts Priorité 1. Valider manuellement le contexte,
+          envoyer une approche courte, puis mettre à jour le statut après réponse.
+          Cette fiche peut être conservée comme preuve de tri, suivi et qualification.
+        </div>
+      </div>
+
+      <div class="pdfFooterNote">
+        Document généré par Meyden Natural CRM — Structurer naturellement l’impact des artistes, entreprises et contacts réels.
+      </div>
+
+    </div>
+  `;
+}
+
+function downloadFinalPDF(){
+  if(!contacts.length){
+    setStatus("PDF impossible pour le moment", "Aucun contact propre à exporter. Importe ou nettoie une liste d’abord.", 20, "clean");
+    toast("PDF non généré", "Aucun contact propre à exporter.", "warn");
+    return;
+  }
+
+  if(typeof html2pdf === "undefined"){
+    setStatus("Librairie PDF non chargée", "Le téléchargement direct PDF n’est pas disponible. Le mode impression sera utilisé.", 80, "export");
+    toast("PDF direct indisponible", "Le navigateur va ouvrir l’impression PDF.", "warn");
+    printReport();
+    return;
+  }
+
+  setStatus("Création du PDF final", "Préparation de la fiche document propre.", 88, "export");
+  toast("Création du PDF", "La fiche finale est en génération.", "info");
+
+  const element = document.createElement("div");
+  element.style.position = "absolute";
+  element.style.left = "-99999px";
+  element.style.top = "0";
+  element.style.background = "#fff";
+  element.innerHTML = buildFinalPDFHTML();
+  document.body.appendChild(element);
+
+  const filename = "meyden-natural-crm-fiche-finale.pdf";
+
+  const options = {
+    margin:0,
+    filename:filename,
+    image:{ type:"jpeg", quality:0.98 },
+    html2canvas:{
+      scale:2,
+      useCORS:true,
+      backgroundColor:"#ffffff"
+    },
+    jsPDF:{
+      unit:"pt",
+      format:"letter",
+      orientation:"portrait"
+    },
+    pagebreak:{
+      mode:["css","legacy"]
+    }
+  };
+
+  html2pdf()
+    .set(options)
+    .from(element.querySelector(".pdfFinalDoc"))
+    .save()
+    .then(() => {
+      document.body.removeChild(element);
+      setStatus("PDF final téléchargé", "Le téléchargement du document PDF a été lancé.", 100, "done");
+      toast("Téléchargement lancé", filename, "success");
+    })
+    .catch(() => {
+      document.body.removeChild(element);
+      setStatus("Erreur PDF", "Le PDF direct a échoué. Le mode impression sera utilisé.", 80, "export");
+      toast("Erreur PDF", "Ouverture du mode impression en secours.", "error");
+      printReport();
+    });
 }
 
 function buildReport(){
