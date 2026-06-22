@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MEYDEN CONNECT — Story Prep</title>
+
+<style>
+:root{
+  --bg:#070809;
+  --panel:#121419;
+  --panel2:#1b1e24;
+  --text:#f4f4f4;
+  --muted:#b9bec7;
+  --orange:#ff6a00;
+  --orange2:#ff8a2a;
+  --white:#ffffff;
+  --black:#050505;
+  --border:#2d3139;
+  --green:#46d17d;
+  --red:#ff5b5b;
+  --radius:18px;
+  --shadow:0 18px 50px rgba(0,0,0,.42);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:
+    radial-gradient(circle at top left,rgba(255,106,0,.18),transparent 32%),
+    linear-gradient(180deg,#101115,#050505);
+  color:var(--text);
+  line-height:1.5;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  padding:24px 16px;
+  background:linear-gradient(135deg,rgba(255,106,0,.20),rgba(5,5,5,.94));
+  border-bottom:1px solid rgba(255,106,0,.28);
+  backdrop-filter:blur(10px);
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 14px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.logoBox{
+  width:110px;
+  height:110px;
+  border-radius:22px;
+  background:linear-gradient(180deg,#17191f,#090a0d);
+  border:1px solid rgba(255,106,0,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 16px 40px rgba(0,0,0,.45);
+}
+
+.logoBox svg{
+  width:84px;
+  height:84px;
+}
+
+.eyebrow{
+  color:#ffb27a;
+  font-weight:800;
+  letter-spacing:.16em;
+  font-size:.78rem;
+  text-transform:uppercase;
+}
+
+h1{
+  margin:0;
+  font-size:clamp(1.8rem,4vw,3.1rem);
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  line-height:1.05;
+  color:#fff;
+}
+
+.tagline{
+  margin-top:8px;
+  color:#fff;
+  font-weight:700;
+  letter-spacing:.04em;
+}
+
+.mini{
+  color:var(--muted);
+  font-size:.88rem;
+  margin:6px 0 0;
+}
+
+main{
+  padding:18px 0 34px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  margin:16px 0;
+}
+
+@media(min-width:900px){
+  .grid.two{grid-template-columns:1fr 1fr;}
+  .grid.three{grid-template-columns:repeat(3,1fr);}
+}
+
+.card{
+  background:linear-gradient(180deg,rgba(27,30,36,.98),rgba(14,15,19,.98));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+
+h2{
+  margin:0 0 10px;
+  color:var(--orange2);
+  font-size:1.25rem;
+}
+
+h3{
+  margin:14px 0 8px;
+  color:#fff;
+  font-size:1rem;
+}
+
+p{
+  margin:0 0 12px;
+  color:var(--muted);
+}
+
+label{
+  display:block;
+  margin:8px 0 6px;
+  color:#e6e6e6;
+  font-weight:700;
+  font-size:.92rem;
+}
+
+textarea,
+input,
+select{
+  width:100%;
+  border:1px solid #383c46;
+  background:#0d0f13;
+  color:#fff;
+  border-radius:12px;
+  padding:12px;
+  font:inherit;
+  outline:none;
+}
+
+textarea{
+  min-height:210px;
+  resize:vertical;
+}
+
+textarea:focus,
+input:focus,
+select:focus{
+  border-color:var(--orange);
+  box-shadow:0 0 0 2px rgba(255,106,0,.16);
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+
+@media(min-width:760px){
+  .row.cols2{grid-template-columns:1fr 1fr;}
+  .row.cols3{grid-template-columns:1fr 1fr 1fr;}
+}
+
+.btns{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
+}
+
+button{
+  border:0;
+  background:linear-gradient(135deg,var(--orange2),#bd4d00);
+  color:#0b0b0b;
+  border-radius:12px;
+  padding:11px 14px;
+  font-weight:900;
+  cursor:pointer;
+  letter-spacing:.02em;
+}
+
+button:hover{
+  filter:brightness(1.08);
+}
+
+button.secondary{
+  background:#292d36;
+  color:#fff;
+  border:1px solid #484d59;
+}
+
+button.good{
+  background:linear-gradient(135deg,#58dd8c,#1b8f48);
+  color:#061108;
+}
+
+button.danger{
+  background:linear-gradient(135deg,#f05b5b,#8e1515);
+  color:#fff;
+}
+
+.notice{
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:rgba(255,106,0,.08);
+  border-left:4px solid var(--orange);
+  color:#f4d4bd;
+}
+
+.fileZone{
+  border:1px dashed rgba(255,106,0,.55);
+  background:rgba(255,106,0,.06);
+  border-radius:16px;
+  padding:14px;
+}
+
+.preview{
+  white-space:pre-wrap;
+  background:#0d0f13;
+  border:1px solid #30343d;
+  border-radius:12px;
+  padding:12px;
+  min-height:90px;
+  max-height:230px;
+  overflow:auto;
+  color:#d8dbe1;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:10px;
+}
+
+@media(min-width:760px){
+  .stats{grid-template-columns:repeat(4,1fr);}
+}
+
+.stat{
+  background:#0d0f13;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+}
+
+.stat b{
+  display:block;
+  color:var(--orange2);
+  font-size:1.65rem;
+}
+
+.pill{
+  display:inline-block;
+  padding:4px 9px;
+  border-radius:999px;
+  border:1px solid #4d535e;
+  background:#151820;
+  color:#f0f0f0;
+  margin:3px;
+  font-size:.8rem;
+}
+
+.badList{
+  white-space:pre-wrap;
+  background:#120d0d;
+  color:#ffd5d5;
+  border:1px solid #432323;
+  border-radius:12px;
+  padding:12px;
+  min-height:90px;
+  max-height:230px;
+  overflow:auto;
+}
+
+.tableWrap{
+  overflow:auto;
+  border-radius:14px;
+  border:1px solid var(--border);
+  margin-top:12px;
+}
+
+table{
+  width:100%;
+  min-width:980px;
+  border-collapse:collapse;
+  background:#0d0f13;
+}
+
+th,td{
+  border-bottom:1px solid #282c34;
+  padding:9px;
+  text-align:left;
+  vertical-align:top;
+  font-size:.9rem;
+}
+
+th{
+  color:var(--orange2);
+  background:#151820;
+}
+
+td textarea{
+  min-height:56px;
+  padding:8px;
+  border-radius:9px;
+  font-size:.86rem;
+}
+
+td input,
+td select{
+  padding:8px;
+  border-radius:9px;
+  font-size:.86rem;
+}
+
+footer{
+  padding:28px 16px;
+  text-align:center;
+  color:var(--muted);
+  border-top:1px solid var(--border);
+}
+
+/* Rapport imprimable PDF */
+#printReport{
+  display:none;
+  background:#fff;
+  color:#111;
+}
+
+@media print{
+  @page{
+    size:letter;
+    margin:13mm;
+  }
+
+  body{
+    background:#fff!important;
+    color:#111!important;
+  }
+
+  body > header,
+  body > main,
+  body > footer{
+    display:none!important;
+  }
+
+  #printReport{
+    display:block!important;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#111!important;
+  }
+
+  .pdfPage{
+    page-break-after:always;
+  }
+
+  .pdfPage:last-child{
+    page-break-after:auto;
+  }
+
+  .pdfBrand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:14px;
+  }
+
+  .pdfLogo{
+    width:72px;
+    height:72px;
+    border:1px solid #111;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .pdfTitle{
+    font-size:24px;
+    font-weight:900;
+    text-transform:uppercase;
+    margin:0;
+  }
+
+  .pdfSub{
+    font-size:12px;
+    color:#555;
+    margin:4px 0 0;
+  }
+
+  .pdfSection{
+    margin:14px 0 18px;
+  }
+
+  .pdfSection h2{
+    color:#111;
+    font-size:16px;
+    border-bottom:2px solid #111;
+    padding-bottom:4px;
+    margin:0 0 8px;
+  }
+
+  .pdfGrid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin:10px 0 14px;
+  }
+
+  .pdfStat{
+    border:1px solid #bbb;
+    border-radius:6px;
+    padding:8px;
+    text-align:center;
+  }
+
+  .pdfStat b{
+    display:block;
+    font-size:20px;
+    color:#111;
+  }
+
+  .pdfTable{
+    width:100%;
+    border-collapse:collapse;
+    font-size:10px;
+  }
+
+  .pdfTable th,
+  .pdfTable td{
+    border:1px solid #bbb;
+    padding:5px;
+    color:#111;
+    vertical-align:top;
+  }
+
+  .pdfTable th{
+    background:#eee;
+  }
+
+  .pdfNote{
+    border-left:4px solid #111;
+    background:#f3f3f3;
+    padding:8px;
+    font-size:11px;
+  }
+
+  .pdfPre{
+    white-space:pre-wrap;
+    border:1px solid #bbb;
+    background:#f7f7f7;
+    padding:8px;
+    font-family:Consolas,monospace;
+    font-size:9px;
+  }
+
+  .pdfPill{
+    display:inline-block;
+    border:1px solid #999;
+    border-radius:999px;
+    padding:2px 6px;
+    margin:2px;
+    font-size:10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div class="logoBox">
+        <svg viewBox="0 0 200 200" role="img" aria-label="Logo Meyden renard">
+          <polygon points="30,42 73,92 127,92 170,42 157,123 100,157 43,123" fill="#ff6a00"/>
+          <polygon points="45,59 73,92 56,106" fill="#050505"/>
+          <polygon points="155,59 127,92 144,106" fill="#050505"/>
+          <polygon points="43,123 82,116 100,136 118,116 157,123 100,157" fill="#ffffff"/>
+          <polygon points="89,136 100,126 111,136 100,146" fill="#050505"/>
+          <polygon points="74,103 92,111 80,116" fill="#050505"/>
+          <polygon points="126,103 108,111 120,116" fill="#050505"/>
+        </svg>
+      </div>
+
+      <div>
+        <div class="eyebrow">Mouvement artistique du Québec</div>
+        <h1>MEYDEN CONNECT</h1>
+        <div class="tagline">Structurer naturellement l’impact des artistes et des entreprises.</div>
+        <p class="mini">Story Prep • Lecteur de fichiers • Nettoyage de contacts • Rapport PDF • Import CRM</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="grid two">
+    <div class="card">
+      <h2>1. Coller les vues de story / noms bruts</h2>
+      <p>Colle ici les noms, handles, listes CSV ou notes copiées depuis Facebook, Instagram, TikTok, Messenger ou ChatGPT.</p>
+
+      <textarea id="rawInput" placeholder="Exemples :
+Bruno Matante Mutante - band rock
+@mljphotographie - photo vidéo
+Luc Gauthier, Lujamko Studio, son / studio
+Anthony Morsure - band métal Montréal
+business
+outil de travail"></textarea>
+
+      <div class="row cols3">
+        <div>
+          <label>Campagne / source</label>
+          <input id="sourceInput" value="Story Meyden" />
+        </div>
+
+        <div>
+          <label>Événement lié</label>
+          <input id="eventInput" value="After Warped / Meyden Metal 22 août" />
+        </div>
+
+        <div>
+          <label>Action par défaut</label>
+          <select id="defaultAction">
+            <option>Envoyer approche douce</option>
+            <option>Remercier pour la vue story</option>
+            <option>Inviter à l’événement</option>
+            <option>Proposer incubation Meyden</option>
+            <option>À qualifier manuellement</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="btns">
+        <button onclick="analyzeRaw()">Analyser / nettoyer</button>
+        <button class="secondary" onclick="loadDemo()">Exemple</button>
+        <button class="danger" onclick="clearAll()">Effacer</button>
+      </div>
+
+      <div class="notice">
+        But : transformer les vues de stories en contacts propres avant de les coller dans le CRM principal.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. Mode fichier</h2>
+      <p>Ouvre un fichier CSV, TXT, JSON ou HTML. L’outil lit le contenu, nettoie les lignes, puis crée une liste logique.</p>
+
+      <div class="fileZone" id="dropZone">
+        <label>Ouvrir un fichier local</label>
+        <input id="fileInput" type="file" accept=".csv,.txt,.json,.html,.htm,text/csv,text/plain,application/json,text/html" onchange="handleFileSelect(event)" />
+        <p class="mini">Pour Excel XLSX, exporte d’abord en CSV. C’est plus stable sur tablette.</p>
+      </div>
+
+      <label>Lecture du fichier</label>
+      <div class="preview" id="filePreview">Aucun fichier ouvert.</div>
+
+      <div class="btns">
+        <button onclick="analyzeRaw()">Analyser le contenu lu</button>
+        <button class="secondary" onclick="copyFilePreview()">Copier lecture</button>
+        <button class="secondary" onclick="clearFilePreview()">Vider lecture</button>
+      </div>
+
+      <div class="notice">
+        Le mode fichier évite les erreurs de lecture sur tablette : tu ouvres le fichier ici, puis l’outil le convertit en contacts compréhensibles.
+      </div>
+    </div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>3. Rapport instantané</h2>
+
+      <div class="stats">
+        <div class="stat"><b id="statTotal">0</b><span>Total détecté</span></div>
+        <div class="stat"><b id="statClean">0</b><span>Contacts propres</span></div>
+        <div class="stat"><b id="statP1">0</b><span>Priorité 1</span></div>
+        <div class="stat"><b id="statBad">0</b><span>Rejetés</span></div>
+      </div>
+
+      <h3>Catégories détectées</h3>
+      <div id="categoryPills"></div>
+
+      <h3>Entrées rejetées</h3>
+      <div class="badList" id="badList">Aucune analyse pour le moment.</div>
+
+      <div class="btns">
+        <button class="secondary" onclick="copyReport()">Copier rapport texte</button>
+        <button class="secondary" onclick="saveLocal()">Sauver localement</button>
+        <button class="secondary" onclick="restoreLocal()">Recharger sauvegarde</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. Rapport PDF propre</h2>
+      <p>Génère une fiche claire : résumé, priorités, catégories, prochaines actions, contacts et rejets.</p>
+
+      <div class="row cols2">
+        <div>
+          <label>Titre du rapport</label>
+          <input id="reportTitle" value="Rapport Story Prep — Meyden Connect" />
+        </div>
+
+        <div>
+          <label>Préparé par</label>
+          <input id="reportAuthor" value="Meyden Connect — Mouvement Artistique du Québec" />
+        </div>
+      </div>
+
+      <label>Objectif du rapport</label>
+      <textarea id="reportObjective" style="min-height:90px">Transformer les vues, listes et fichiers bruts en contacts propres, priorisés et utilisables pour le suivi Meyden.</textarea>
+
+      <div class="btns">
+        <button class="good" onclick="printPDFReport()">Créer rapport PDF</button>
+        <button class="secondary" onclick="downloadReportHTML()">Télécharger rapport HTML</button>
+      </div>
+
+      <div class="notice">
+        Sur Android/Samsung : bouton “Créer rapport PDF”, puis dans l’impression choisir “Enregistrer en PDF”.
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>5. Contacts préparés</h2>
+    <p>Tu peux corriger chaque ligne avant de générer le bloc final.</p>
+
+    <div class="btns">
+      <button onclick="addManualContact()">Ajouter ligne manuelle</button>
+      <button class="good" onclick="generateImportBlock()">Générer bloc import CRM</button>
+      <button class="secondary" onclick="downloadCSV()">Télécharger CSV</button>
+      <button class="secondary" onclick="downloadJSON()">Télécharger JSON</button>
+    </div>
+
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Catégorie</th>
+            <th>Priorité</th>
+            <th>Statut</th>
+            <th>Lien avec Meyden</th>
+            <th>Action prochaine</th>
+            <th>Notes</th>
+            <th>Retirer</th>
+          </tr>
+        </thead>
+        <tbody id="contactsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>6. Bloc prêt à coller dans Story CRM</h2>
+      <p>Copie le bloc qui commence par <b>### IMPORT MEYDEN CRM</b> et finit par <b>### FIN IMPORT</b>.</p>
+
+      <textarea id="importOutput" placeholder="Le bloc généré apparaîtra ici."></textarea>
+
+      <div class="btns">
+        <button onclick="copyImportBlock()">Copier bloc import</button>
+        <button class="secondary" onclick="downloadTXT()">Télécharger TXT</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>7. Messages rapides</h2>
+      <p>Génère un message court selon le type de contact.</p>
+
+      <label>Contact cible</label>
+      <select id="messageContact"></select>
+
+      <label>Type de message</label>
+      <select id="messageType">
+        <option>Approche douce</option>
+        <option>Artiste / créateur</option>
+        <option>Partenaire / business</option>
+        <option>Événement / spectacle</option>
+        <option>Remerciement story</option>
+      </select>
+
+      <label>Message</label>
+      <textarea id="messageOutput" placeholder="Clique Générer message."></textarea>
+
+      <div class="btns">
+        <button onclick="generateMessage()">Générer message</button>
+        <button class="secondary" onclick="copyMessage()">Copier message</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="printReport"></div>
+
+<footer>
+  MEYDEN CONNECT | MEYDEN — Mouvement Artistique du Québec | Structurer naturellement l’impact des artistes et des entreprises.
+</footer>
+
+<script>
+const categories = [
+  "Artiste / Musique",
+  "Photo / Vidéo",
+  "Maquillage / Visuel",
+  "Technique / Son / Lumière",
+  "Partenaire / Business",
+  "Merch / Production",
+  "Public fidèle",
+  "Famille / Soutien",
+  "À identifier"
+];
+
+const statuses = [
+  "À contacter",
+  "Contacté",
+  "Réponse reçue",
+  "Collaboration active",
+  "En attente",
+  "Pas pertinent"
+];
+
+const priorities = [
+  "Priorité 1",
+  "Priorité 2",
+  "Priorité 3"
+];
+
+let contacts = [];
+let rejected = [];
+let lastFileMeta = null;
+
+const falseExactContacts = [
+  "business",
+  "outil de travail",
+  "la production",
+  "le mouvement avance",
+  "story",
+  "stories",
+  "publicité",
+  "sponsorisé",
+  "message",
+  "notification",
+  "profil",
+  "reel",
+  "réel",
+  "photo",
+  "vidéo",
+  "musique",
+  "facebook",
+  "instagram",
+  "tiktok",
+  "meta",
+  "les amis",
+  "vues",
+  "vue",
+  "j'aime",
+  "commentaire",
+  "nom",
+  "name",
+  "contact",
+  "categorie",
+  "catégorie",
+  "priorite",
+  "priorité",
+  "statut",
+  "status",
+  "notes"
+];
+
+const falseContainContacts = [
+  "voir plus",
+  "répondre",
+  "partagé avec",
+  "afficher plus",
+  "envoyer un message",
+  "outil de travail"
+];
+
+function normalizeName(s){
+  return String(s || "")
+    .replace(/[\t]+/g," ")
+    .replace(/[|;]/g," ")
+    .replace(/\s+/g," ")
+    .replace(/^[\-–—•*\d\.\)\s]+/,"")
+    .replace(/[“”"<>]/g,"")
+    .trim();
+}
+
+function keyName(s){
+  return normalizeName(s)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9@. ]/g,"")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function escapeHTML(str){
+  return String(str || "").replace(/[&<>\"]/g, function(m){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m];
+  });
+}
+
+function escapeAttr(str){
+  return escapeHTML(str).replace(/'/g,"&#039;");
+}
+
+function isFalseContact(name){
+  const k = keyName(name);
+
+  if(!k || k.length < 3) return true;
+  if(falseExactContacts.some(f => k === keyName(f))) return true;
+  if(falseContainContacts.some(f => k.includes(keyName(f)))) return true;
+  if(/^\d+$/.test(k)) return true;
+  if(k.split(" ").length > 9) return true;
+
+  return false;
+}
+
+function detectCategory(text){
+  const t = keyName(text);
+
+  const rules = [
+    ["Artiste / Musique", [
+      "band","groupe","music","musique","metal","rock","punk","rap","chant","chanteur",
+      "chanteuse","guitar","bass","drum","batterie","studio","single","ep","album",
+      "singer","musician","morsure","matante","symbioz","burn","abyss","bury"
+    ]],
+    ["Photo / Vidéo", [
+      "photo","video","photographie","photographe","mlj","camera","clip","reel",
+      "captation","media","montage","filmmaker","videaste","vidéaste"
+    ]],
+    ["Maquillage / Visuel", [
+      "maquillage","makeup","visuel","coiffure","coiffeuse","esthetique","esthétique",
+      "look","costume","modele","modèle"
+    ]],
+    ["Technique / Son / Lumière", [
+      "son","sound","lumiere","lumière","tech","technicien","audio","mix","mixage",
+      "master","scene","scène","lighting","obs","blackmagic","avipas"
+    ]],
+    ["Partenaire / Business", [
+      "partenaire","business","entreprise","commandite","sponsor","assurance","cabaret",
+      "festival","bar","salle","diffuseur","programmateur","media","média","radio",
+      "etiquette","étiquette","label"
+    ]],
+    ["Merch / Production", [
+      "merch","tshirt","t-shirt","impression","production","produit","boutique",
+      "catalogue","fabrication"
+    ]],
+    ["Famille / Soutien", [
+      "famille","cousin","cousine","frere","frère","soeur","sœur","mere","mère",
+      "pere","père","ami","amie","support","soutien"
+    ]]
+  ];
+
+  for(const rule of rules){
+    const cat = rule[0];
+    const words = rule[1];
+    if(words.some(w => t.includes(keyName(w)))) return cat;
+  }
+
+  if(!t.startsWith("@") && t.split(" ").length <= 3) return "À identifier";
+
+  return "Public fidèle";
+}
+
+function detectPriority(text, category){
+  const t = keyName(text);
+
+  const p1 = [
+    "band","groupe","festival","cabaret","radio","media","média","programmateur",
+    "partenaire","commandite","studio","label","etiquette","étiquette","matante",
+    "symbioz","burn","bury","morsure","show","scene","scène"
+  ];
+
+  const p2 = [
+    "photo","video","vidéo","son","maquillage","coiffure","ami","support","merch"
+  ];
+
+  if(p1.some(w => t.includes(keyName(w))) || [
+    "Artiste / Musique",
+    "Partenaire / Business",
+    "Technique / Son / Lumière"
+  ].includes(category)){
+    return "Priorité 1";
+  }
+
+  if(p2.some(w => t.includes(keyName(w))) || [
+    "Photo / Vidéo",
+    "Maquillage / Visuel",
+    "Merch / Production"
+  ].includes(category)){
+    return "Priorité 2";
+  }
+
+  return "Priorité 3";
+}
+
+function detectLink(text, category){
+  const source = document.getElementById("sourceInput").value.trim() || "Story Meyden";
+  const event = document.getElementById("eventInput").value.trim();
+
+  if(category === "Artiste / Musique"){
+    return source + " — potentiel artiste/band à qualifier" + (event ? " — " + event : "");
+  }
+
+  if(category === "Partenaire / Business"){
+    return source + " — potentiel partenaire, lieu, média ou commandite" + (event ? " — " + event : "");
+  }
+
+  if(category === "Photo / Vidéo"){
+    return source + " — potentiel contenu, captation, couverture ou visuel";
+  }
+
+  if(category === "Technique / Son / Lumière"){
+    return source + " — potentiel soutien technique ou production live";
+  }
+
+  if(category === "Maquillage / Visuel"){
+    return source + " — potentiel image, coiffure, maquillage ou direction visuelle";
+  }
+
+  if(category === "Merch / Production"){
+    return source + " — potentiel merch, production ou catalogue";
+  }
+
+  if(category === "Famille / Soutien"){
+    return source + " — soutien naturel / cercle proche";
+  }
+
+  return source + " — contact à qualifier";
+}
+
+function smartAction(category, priority){
+  const d = document.getElementById("defaultAction").value;
+
+  if(d !== "À qualifier manuellement") return d;
+
+  if(priority === "Priorité 1" && category === "Artiste / Musique"){
+    return "Envoyer approche incubation / show";
+  }
+
+  if(priority === "Priorité 1" && category === "Partenaire / Business"){
+    return "Envoyer approche partenaire Meyden";
+  }
+
+  if(category === "Public fidèle"){
+    return "Remercier pour la vue story";
+  }
+
+  return "À qualifier manuellement";
+}
+
+function parseLine(line){
+  let clean = normalizeName(line);
+  clean = clean.replace(/\s+,\s+/g," - ");
+
+  if(clean.includes(" - ")){
+    const parts = clean.split(" - ").map(x => x.trim()).filter(Boolean);
+    return {
+      name: normalizeName(parts[0]),
+      note: parts.slice(1).join(" - ")
+    };
+  }
+
+  if(clean.includes(",")){
+    const parts = clean.split(",").map(x => x.trim()).filter(Boolean);
+    return {
+      name: normalizeName(parts[0]),
+      note: parts.slice(1).join(" - ")
+    };
+  }
+
+  return {
+    name: clean,
+    note: ""
+  };
+}
+
+function buildContact(name, note, extra){
+  extra = extra || {};
+
+  const combined = name + " " + note + " " + Object.values(extra).join(" ");
+  const category = categories.includes(extra.category) ? extra.category : detectCategory(combined);
+  const priority = priorities.includes(extra.priority) ? extra.priority : detectPriority(combined, category);
+
+  return {
+    name: normalizeName(name),
+    category: category,
+    priority: priority,
+    status: statuses.includes(extra.status) ? extra.status : "À contacter",
+    link: extra.link || detectLink(combined, category),
+    action: extra.action || smartAction(category, priority),
+    notes: note || extra.notes || "Détecté depuis fichier/story. À valider humainement avant approche."
+  };
+}
+
+function analyzeRaw(){
+  const raw = document.getElementById("rawInput").value;
+  const lines = raw.split(/\n+/).map(x => x.trim()).filter(Boolean);
+  const seen = new Set();
+  const newContacts = [];
+
+  rejected = [];
+
+  for(const line of lines){
+    const parsed = parseLine(line);
+    const k = keyName(parsed.name);
+
+    if(isFalseContact(parsed.name)){
+      rejected.push(line + " — faux contact / entrée trop vague");
+      continue;
+    }
+
+    if(seen.has(k)){
+      rejected.push(line + " — doublon");
+      continue;
+    }
+
+    seen.add(k);
+    newContacts.push(buildContact(parsed.name, parsed.note));
+  }
+
+  contacts = newContacts;
+  renderAll();
+}
+
+function renderAll(){
+  renderStats();
+  renderTable();
+  renderMessageContacts();
+}
+
+function renderStats(){
+  document.getElementById("statTotal").textContent = contacts.length + rejected.length;
+  document.getElementById("statClean").textContent = contacts.length;
+  document.getElementById("statP1").textContent = contacts.filter(c => c.priority === "Priorité 1").length;
+  document.getElementById("statBad").textContent = rejected.length;
+
+  document.getElementById("badList").textContent = rejected.length ? rejected.join("\n") : "Aucun rejet détecté.";
+
+  const counts = {};
+
+  for(const c of contacts){
+    counts[c.category] = (counts[c.category] || 0) + 1;
+  }
+
+  const pills = Object.keys(counts).length
+    ? Object.entries(counts).map(([k,v]) => '<span class="pill">' + escapeHTML(k) + " : " + v + "</span>").join("")
+    : '<span class="mini">Aucune catégorie.</span>';
+
+  document.getElementById("categoryPills").innerHTML = pills;
+}
+
+function renderTable(){
+  const body = document.getElementById("contactsBody");
+
+  body.innerHTML = contacts.map((c,i) => `
+    <tr>
+      <td><input value="${escapeAttr(c.name)}" onchange="updateContact(${i},'name',this.value)"></td>
+
+      <td>
+        <select onchange="updateContact(${i},'category',this.value)">
+          ${categories.map(x => `<option ${x === c.category ? "selected" : ""}>${x}</option>`).join("")}
+        </select>
+      </td>
+
+      <td>
+        <select onchange="updateContact(${i},'priority',this.value)">
+          ${priorities.map(x => `<option ${x === c.priority ? "selected" : ""}>${x}</option>`).join("")}
+        </select>
+      </td>
+
+      <td>
+        <select onchange="updateContact(${i},'status',this.value)">
+          ${statuses.map(x => `<option ${x === c.status ? "selected" : ""}>${x}</option>`).join("")}
+        </select>
+      </td>
+
+      <td><textarea onchange="updateContact(${i},'link',this.value)">${escapeHTML(c.link)}</textarea></td>
+      <td><textarea onchange="updateContact(${i},'action',this.value)">${escapeHTML(c.action)}</textarea></td>
+      <td><textarea onchange="updateContact(${i},'notes',this.value)">${escapeHTML(c.notes)}</textarea></td>
+      <td><button class="danger" onclick="removeContact(${i})">X</button></td>
+    </tr>
+  `).join("");
+}
+
+function renderMessageContacts(){
+  const sel = document.getElementById("messageContact");
+
+  sel.innerHTML = contacts.length
+    ? contacts.map((c,i) => `<option value="${i}">${escapeHTML(c.name)} — ${escapeHTML(c.category)}</option>`).join("")
+    : `<option value="">Aucun contact</option>`;
+}
+
+function updateContact(i, field, value){
+  contacts[i][field] = value;
+  renderStats();
+  renderMessageContacts();
+}
+
+function removeContact(i){
+  contacts.splice(i,1);
+  renderAll();
+}
+
+function addManualContact(){
+  contacts.push({
+    name:"Nouveau contact",
+    category:"À identifier",
+    priority:"Priorité 3",
+    status:"À contacter",
+    link:"Ajout manuel",
+    action:"À qualifier manuellement",
+    notes:""
+  });
+
+  renderAll();
+}
+
+/* MODE FICHIER */
+
+function handleFileSelect(event){
+  const file = event.target.files && event.target.files[0];
+  if(file) readLocalFile(file);
+}
+
+function setupDropZone(){
+  const dz = document.getElementById("dropZone");
+  if(!dz) return;
+
+  ["dragenter","dragover"].forEach(ev => {
+    dz.addEventListener(ev, e => {
+      e.preventDefault();
+      dz.style.borderColor = "#ff6a00";
+    });
+  });
+
+  ["dragleave","drop"].forEach(ev => {
+    dz.addEventListener(ev, e => {
+      e.preventDefault();
+      dz.style.borderColor = "rgba(255,106,0,.55)";
+    });
+  });
+
+  dz.addEventListener("drop", e => {
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if(file) readLocalFile(file);
+  });
+}
+
+function readLocalFile(file){
+  const ext = (file.name.split(".").pop() || "").toLowerCase();
+
+  if(["xlsx","xls"].includes(ext)){
+    document.getElementById("filePreview").textContent =
+      "Ce fichier semble être un Excel. Pour garder l’outil local et léger, exporte-le en CSV puis ouvre le CSV ici.";
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(){
+    const text = String(reader.result || "");
+
+    lastFileMeta = {
+      name:file.name,
+      size:file.size,
+      type:file.type || ext,
+      openedAt:new Date().toLocaleString("fr-CA")
+    };
+
+    const result = convertFileTextToRaw(text, ext, file.name);
+
+    document.getElementById("rawInput").value = result.raw;
+
+    document.getElementById("filePreview").textContent =
+      "Fichier: " + file.name +
+      "\nType: " + (ext || file.type || "inconnu") +
+      "\nLignes utiles: " + result.count +
+      "\nMode détecté: " + result.mode +
+      "\n\nAperçu:\n" +
+      result.raw.slice(0,2500) +
+      (result.raw.length > 2500 ? "\n..." : "");
+
+    if(result.contacts && result.contacts.length){
+      contacts = result.contacts;
+      rejected = result.rejected || [];
+      renderAll();
+    }else{
+      analyzeRaw();
+    }
+  };
+
+  reader.onerror = function(){
+    alert("Impossible de lire ce fichier dans le navigateur.");
+  };
+
+  reader.readAsText(file, "UTF-8");
+}
+
+function convertFileTextToRaw(text, ext, filename){
+  let raw = String(text || "");
+
+  if(ext === "html" || ext === "htm"){
+    raw = stripHTML(raw);
+  }
+
+  if(ext === "json" || looksLikeJSON(raw)){
+    const parsed = parseJSONContacts(raw);
+    if(parsed) return parsed;
+  }
+
+  if(ext === "csv" || looksLikeCSV(raw)){
+    const parsed = parseCSVContacts(raw, filename);
+    if(parsed) return parsed;
+  }
+
+  const lines = raw.split(/\r?\n/).map(x => normalizeName(x)).filter(Boolean);
+
+  return {
+    raw:lines.join("\n"),
+    count:lines.length,
+    mode:"texte brut",
+    contacts:null,
+    rejected:[]
+  };
+}
+
+function stripHTML(html){
+  const tmp = document.createElement("div");
+
+  tmp.innerHTML = html
+    .replace(/<br\s*\/?>/gi,"\n")
+    .replace(/<\/p>/gi,"\n")
+    .replace(/<\/tr>/gi,"\n")
+    .replace(/<\/li>/gi,"\n");
+
+  return tmp.textContent || tmp.innerText || "";
+}
+
+function looksLikeJSON(text){
+  return /^\s*[\[{]/.test(text);
+}
+
+function parseJSONContacts(text){
+  try{
+    const data = JSON.parse(text);
+    const arr = Array.isArray(data) ? data : Array.isArray(data.contacts) ? data.contacts : null;
+
+    if(!arr) return null;
+
+    const seen = new Set();
+    const list = [];
+    const rej = [];
+
+    arr.forEach((item, idx) => {
+      const name = normalizeName(
+        item.name ||
+        item.nom ||
+        item.contact ||
+        item.title ||
+        item.Nom ||
+        item.Name ||
+        ""
+      );
+
+      const note = item.notes || item.note || item.description || "";
+      const k = keyName(name);
+
+      if(isFalseContact(name)){
+        rej.push("JSON ligne " + (idx + 1) + " — nom manquant ou trop vague");
+        return;
+      }
+
+      if(seen.has(k)){
+        rej.push(name + " — doublon");
+        return;
+      }
+
+      seen.add(k);
+
+      list.push(buildContact(name, note, {
+        category:item.category || item.categorie || item.Catégorie,
+        priority:item.priority || item.priorite || item.Priorité,
+        status:item.status || item.statut || item.Statut,
+        link:item.link || item.lien,
+        action:item.action || item.nextAction || item["Action prochaine"],
+        notes:note
+      }));
+    });
+
+    return {
+      raw:list.map(c => c.name + " - " + c.notes).join("\n"),
+      count:list.length,
+      mode:"JSON contacts",
+      contacts:list,
+      rejected:rej
+    };
+
+  }catch(e){
+    return null;
+  }
+}
+
+function looksLikeCSV(text){
+  const first = text.split(/\r?\n/).find(l => l.trim());
+  return !!first && (first.includes(",") || first.includes(";") || first.includes("\t"));
+}
+
+function detectDelimiter(text){
+  const sample = text.split(/\r?\n/).slice(0,5).join("\n");
+
+  const counts = {
+    ",":(sample.match(/,/g) || []).length,
+    ";":(sample.match(/;/g) || []).length,
+    "\t":(sample.match(/\t/g) || []).length
+  };
+
+  return Object.entries(counts).sort((a,b) => b[1] - a[1])[0][0];
+}
+
+function parseCSVRows(text){
+  const delimiter = detectDelimiter(text);
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let inQuotes = false;
+
+  for(let i = 0; i < text.length; i++){
+    const ch = text[i];
+    const next = text[i + 1];
+
+    if(ch === '"'){
+      if(inQuotes && next === '"'){
+        cell += '"';
+        i++;
+      }else{
+        inQuotes = !inQuotes;
+      }
+    }else if(ch === delimiter && !inQuotes){
+      row.push(cell);
+      cell = "";
+    }else if((ch === "\n" || ch === "\r") && !inQuotes){
+      if(ch === "\r" && next === "\n") i++;
+      row.push(cell);
+      rows.push(row.map(x => x.trim()));
+      row = [];
+      cell = "";
+    }else{
+      cell += ch;
+    }
+  }
+
+  if(cell || row.length){
+    row.push(cell);
+    rows.push(row.map(x => x.trim()));
+  }
+
+  return rows.filter(r => r.some(c => String(c).trim()));
+}
+
+function parseCSVContacts(text, filename){
+  const rows = parseCSVRows(text);
+
+  if(!rows.length) return null;
+
+  const header = rows[0].map(h => keyName(h));
+
+  const known = [
+    "nom","name","contact","categorie","category","priorite","priority",
+    "statut","status","notes","note","lien","link","action"
+  ];
+
+  const hasHeader = header.some(h =>
+    known.includes(h) ||
+    h.includes("nom") ||
+    h.includes("name") ||
+    h.includes("contact")
+  );
+
+  const dataRows = hasHeader ? rows.slice(1) : rows;
+
+  function findCol(names){
+    return header.findIndex(h => names.some(n => h === n || h.includes(n)));
+  }
+
+  const colName = hasHeader ? findCol(["nom","name","contact","personne","profil"]) : 0;
+  const colCat = hasHeader ? findCol(["categorie","category"]) : -1;
+  const colPri = hasHeader ? findCol(["priorite","priority"]) : -1;
+  const colStatus = hasHeader ? findCol(["statut","status"]) : -1;
+  const colLink = hasHeader ? findCol(["lien","link","meyden"]) : -1;
+  const colAction = hasHeader ? findCol(["action","prochaine","next"]) : -1;
+  const colNotes = hasHeader ? findCol(["notes","note","description","commentaire"]) : -1;
+
+  const list = [];
+  const rej = [];
+  const seen = new Set();
+  const rawLines = [];
+
+  dataRows.forEach((r, idx) => {
+    const name = normalizeName((r[colName] || r[0] || "").trim());
+
+    const other = r
+      .map((v,i) => ({v:v,i:i}))
+      .filter(x => x.v && x.i !== colName)
+      .map(x => x.v)
+      .join(" - ");
+
+    const note = colNotes >= 0 ? r[colNotes] : other;
+    const k = keyName(name);
+
+    if(isFalseContact(name)){
+      rej.push("CSV ligne " + (idx + 1 + (hasHeader ? 2 : 1)) + " — " + r.join(" | ") + " — nom manquant ou trop vague");
+      return;
+    }
+
+    if(seen.has(k)){
+      rej.push(name + " — doublon");
+      return;
+    }
+
+    seen.add(k);
+
+    const c = buildContact(name, note, {
+      category: colCat >= 0 ? r[colCat] : undefined,
+      priority: colPri >= 0 ? r[colPri] : undefined,
+      status: colStatus >= 0 ? r[colStatus] : undefined,
+      link: colLink >= 0 ? r[colLink] : undefined,
+      action: colAction >= 0 ? r[colAction] : undefined,
+      notes: note
+    });
+
+    list.push(c);
+    rawLines.push(c.name + (note ? " - " + note : ""));
+  });
+
+  return {
+    raw:rawLines.join("\n"),
+    count:list.length,
+    mode:"CSV" + (hasHeader ? " avec en-têtes" : " sans en-têtes"),
+    contacts:list,
+    rejected:rej
+  };
+}
+
+async function copyFilePreview(){
+  await copyText(document.getElementById("filePreview").textContent);
+}
+
+function clearFilePreview(){
+  document.getElementById("filePreview").textContent = "Aucun fichier ouvert.";
+  lastFileMeta = null;
+}
+
+/* IMPORT CRM */
+
+function generateImportBlock(){
+  const lines = ["### IMPORT MEYDEN CRM"];
+
+  contacts.forEach((c,idx) => {
+    lines.push("CONTACT " + (idx + 1));
+    lines.push("Nom: " + c.name);
+    lines.push("Catégorie: " + c.category);
+    lines.push("Priorité: " + c.priority);
+    lines.push("Statut: " + c.status);
+    lines.push("Lien avec Meyden: " + c.link);
+    lines.push("Action prochaine: " + c.action);
+    lines.push("Notes: " + c.notes);
+    lines.push("---");
+  });
+
+  lines.push("### FIN IMPORT");
+
+  document.getElementById("importOutput").value = lines.join("\n");
+}
+
+async function copyImportBlock(){
+  if(!document.getElementById("importOutput").value.trim()){
+    generateImportBlock();
+  }
+
+  await copyText(document.getElementById("importOutput").value);
+}
+
+/* RAPPORT */
+
+function makeReport(){
+  const counts = {};
+
+  contacts.forEach(c => {
+    counts[c.category] = (counts[c.category] || 0) + 1;
+  });
+
+  return [
+    "RAPPORT STORY PREP — MEYDEN CONNECT",
+    "Source: " + document.getElementById("sourceInput").value,
+    "Événement: " + document.getElementById("eventInput").value,
+    "Contacts propres: " + contacts.length,
+    "Priorité 1: " + contacts.filter(c => c.priority === "Priorité 1").length,
+    "Rejetés: " + rejected.length,
+    "",
+    "Catégories:",
+    ...Object.entries(counts).map(([k,v]) => "- " + k + ": " + v),
+    "",
+    "Prochaines actions prioritaires:",
+    ...contacts.filter(c => c.priority === "Priorité 1").map(c => "- " + c.name + ": " + c.action),
+    "",
+    "Rejetés:",
+    ...(rejected.length ? rejected : ["Aucun"])
+  ].join("\n");
+}
+
+async function copyReport(){
+  await copyText(makeReport());
+}
+
+function pdfLogoHTML(){
+  return `
+    <div class="pdfLogo">
+      <svg viewBox="0 0 200 200" width="58" height="58">
+        <polygon points="30,42 73,92 127,92 170,42 157,123 100,157 43,123" fill="#ff6a00"/>
+        <polygon points="45,59 73,92 56,106" fill="#050505"/>
+        <polygon points="155,59 127,92 144,106" fill="#050505"/>
+        <polygon points="43,123 82,116 100,136 118,116 157,123 100,157" fill="#ffffff" stroke="#111" stroke-width="1"/>
+        <polygon points="89,136 100,126 111,136 100,146" fill="#050505"/>
+      </svg>
+    </div>
+  `;
+}
+
+function buildPDFReportHTML(){
+  if(!document.getElementById("importOutput").value.trim()){
+    generateImportBlock();
+  }
+
+  const counts = {};
+  contacts.forEach(c => counts[c.category] = (counts[c.category] || 0) + 1);
+
+  const priorityOne = contacts.filter(c => c.priority === "Priorité 1");
+
+  const title = document.getElementById("reportTitle").value.trim() || "Rapport Story Prep — Meyden Connect";
+  const author = document.getElementById("reportAuthor").value.trim() || "Meyden Connect";
+  const objective = document.getElementById("reportObjective").value.trim();
+  const now = new Date().toLocaleString("fr-CA");
+
+  const contactRows = contacts.map((c,i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td>${escapeHTML(c.name)}</td>
+      <td>${escapeHTML(c.category)}</td>
+      <td>${escapeHTML(c.priority)}</td>
+      <td>${escapeHTML(c.status)}</td>
+      <td>${escapeHTML(c.action)}</td>
+      <td>${escapeHTML(c.notes)}</td>
+    </tr>
+  `).join("");
+
+  return `
+    <div class="pdfPage">
+      <div class="pdfBrand">
+        ${pdfLogoHTML()}
+        <div>
+          <div class="pdfTitle">${escapeHTML(title)}</div>
+          <p class="pdfSub">Préparé par ${escapeHTML(author)} • ${escapeHTML(now)} • Meyden Connect</p>
+        </div>
+      </div>
+
+      <div class="pdfSection">
+        <h2>1. Objectif</h2>
+        <div class="pdfNote">${escapeHTML(objective || "Transformer une liste brute en contacts propres, utiles et priorisés.")}</div>
+      </div>
+
+      <div class="pdfSection">
+        <h2>2. Résumé</h2>
+        <div class="pdfGrid">
+          <div class="pdfStat"><b>${contacts.length + rejected.length}</b><span>Total détecté</span></div>
+          <div class="pdfStat"><b>${contacts.length}</b><span>Contacts propres</span></div>
+          <div class="pdfStat"><b>${contacts.filter(c => c.priority === "Priorité 1").length}</b><span>Priorité 1</span></div>
+          <div class="pdfStat"><b>${rejected.length}</b><span>Rejetés</span></div>
+        </div>
+
+        <p>
+          Source: ${escapeHTML(document.getElementById("sourceInput").value)}<br>
+          Événement lié: ${escapeHTML(document.getElementById("eventInput").value)}
+          ${lastFileMeta ? "<br>Fichier lu: " + escapeHTML(lastFileMeta.name) + " (" + escapeHTML(lastFileMeta.openedAt) + ")" : ""}
+        </p>
+      </div>
+
+      <div class="pdfSection">
+        <h2>3. Catégories</h2>
+        ${
+          Object.keys(counts).length
+          ? Object.entries(counts).map(([k,v]) => `<span class="pdfPill">${escapeHTML(k)} : ${v}</span>`).join("")
+          : "<p>Aucune catégorie détectée.</p>"
+        }
+      </div>
+
+      <div class="pdfSection">
+        <h2>4. Actions prioritaires</h2>
+        ${
+          priorityOne.length
+          ? `<table class="pdfTable"><thead><tr><th>Contact</th><th>Catégorie</th><th>Action</th></tr></thead><tbody>${priorityOne.map(c => `<tr><td>${escapeHTML(c.name)}</td><td>${escapeHTML(c.category)}</td><td>${escapeHTML(c.action)}</td></tr>`).join("")}</tbody></table>`
+          : "<p>Aucune priorité 1.</p>"
+        }
+      </div>
+    </div>
+
+    <div class="pdfPage">
+      <div class="pdfSection">
+        <h2>5. Contacts préparés</h2>
+        ${
+          contacts.length
+          ? `<table class="pdfTable"><thead><tr><th>#</th><th>Nom</th><th>Catégorie</th><th>Priorité</th><th>Statut</th><th>Action</th><th>Notes</th></tr></thead><tbody>${contactRows}</tbody></table>`
+          : "<p>Aucun contact propre.</p>"
+        }
+      </div>
+
+      <div class="pdfSection">
+        <h2>6. Entrées rejetées</h2>
+        ${rejected.length ? `<div class="pdfPre">${escapeHTML(rejected.join("\n"))}</div>` : "<p>Aucun rejet.</p>"}
+      </div>
+    </div>
+
+    <div class="pdfPage">
+      <div class="pdfSection">
+        <h2>7. Bloc import CRM</h2>
+        <div class="pdfPre">${escapeHTML(document.getElementById("importOutput").value)}</div>
+      </div>
+    </div>
+  `;
+}
+
+function printPDFReport(){
+  document.getElementById("printReport").innerHTML = buildPDFReportHTML();
+  setTimeout(() => window.print(), 100);
+}
+
+function downloadReportHTML(){
+  const html = `
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Rapport Meyden Connect</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;color:#111;max-width:900px;margin:28px auto;padding:0 18px;line-height:1.45}
+.pdfBrand{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.pdfLogo{width:72px;height:72px;border:1px solid #111;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.pdfTitle{font-size:26px;font-weight:900;text-transform:uppercase}
+.pdfSub{font-size:12px;color:#555}
+.pdfSection{margin:18px 0}
+.pdfSection h2{border-bottom:2px solid #111;padding-bottom:4px}
+.pdfGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pdfStat{border:1px solid #bbb;padding:8px;text-align:center;border-radius:6px}
+.pdfStat b{display:block;font-size:22px}
+.pdfTable{width:100%;border-collapse:collapse;font-size:12px}
+.pdfTable th,.pdfTable td{border:1px solid #bbb;padding:6px;vertical-align:top}
+.pdfTable th{background:#eee}
+.pdfNote{border-left:4px solid #111;background:#f3f3f3;padding:8px}
+.pdfPill{display:inline-block;border:1px solid #999;border-radius:999px;padding:2px 7px;margin:2px;font-size:11px}
+.pdfPre{white-space:pre-wrap;border:1px solid #bbb;background:#f7f7f7;padding:8px;font-family:Consolas,monospace;font-size:11px}
+@media print{@page{size:letter;margin:13mm}.pdfPage{page-break-after:always}.pdfPage:last-child{page-break-after:auto}}
+</style>
+</head>
+<body>
+${buildPDFReportHTML()}
+</body>
+</html>`;
+
+  downloadFile("rapport-meyden-connect-story-prep.html", html, "text/html;charset=utf-8");
+}
+
+/* MESSAGES */
+
+function generateMessage(){
+  const idx = document.getElementById("messageContact").value;
+
+  if(idx === "") return;
+
+  const c = contacts[Number(idx)];
+  const type = document.getElementById("messageType").value;
+  const firstName = c.name.split(" ")[0].replace("@","");
+  let msg = "";
+
+  if(type === "Approche douce"){
+    msg = `Salut ${firstName}, j’ai vu ton passage sur la story Meyden. Je prends le temps de qualifier les bons contacts autour du mouvement artistique du Québec. Si jamais tu veux me présenter ton projet ou ton lien avec la scène, écris-moi. Ça peut ouvrir une vraie suite.`;
+  }
+
+  if(type === "Artiste / créateur"){
+    msg = `Salut ${firstName}, ton profil m’a accroché. Je structure actuellement des opportunités avec Meyden — scène, contenu, diffusion, incubation et visibilité. Envoie-moi ton projet ou ton meilleur lien, je vais regarder ça sérieusement.`;
+  }
+
+  if(type === "Partenaire / business"){
+    msg = `Bonjour ${firstName}, je développe Meyden — Mouvement Artistique du Québec avec une logique terrain : artistes, événements, contenus, partenaires et retombées mesurables. Ton profil semble pertinent pour une connexion stratégique. On pourrait regarder s’il y a un angle gagnant ensemble.`;
+  }
+
+  if(type === "Événement / spectacle"){
+    msg = `Salut ${firstName}, je prépare une séquence d’événements Meyden avec bands, contenu, diffusion et développement artistique. Je peux t’envoyer les infos si tu veux voir comment ton projet peut se connecter.`;
+  }
+
+  if(type === "Remerciement story"){
+    msg = `Salut ${firstName}, merci d’avoir passé sur la story Meyden. Je bâtis ça contact par contact, projet par projet. J’apprécie ton attention. Si tu veux me dire ton lien avec la musique, la scène ou la création, je vais le noter.`;
+  }
+
+  document.getElementById("messageOutput").value = msg;
+}
+
+async function copyMessage(){
+  await copyText(document.getElementById("messageOutput").value);
+}
+
+/* OUTILS EXPORT */
+
+async function copyText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    alert("Copié.");
+  }catch(e){
+    prompt("Copie manuelle :", text);
+  }
+}
+
+function downloadFile(filename, content, type){
+  const blob = new Blob([content], {type:type || "text/plain"});
+  const a = document.createElement("a");
+
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function csvEscape(v){
+  return `"${String(v || "").replace(/"/g,'""')}"`;
+}
+
+function downloadCSV(){
+  const header = [
+    "Nom",
+    "Catégorie",
+    "Priorité",
+    "Statut",
+    "Lien avec Meyden",
+    "Action prochaine",
+    "Notes"
+  ];
+
+  const rows = contacts.map(c => [
+    c.name,
+    c.category,
+    c.priority,
+    c.status,
+    c.link,
+    c.action,
+    c.notes
+  ].map(csvEscape).join(","));
+
+  downloadFile(
+    "meyden-connect-story-prep-contacts.csv",
+    [header.map(csvEscape).join(","), ...rows].join("\n"),
+    "text/csv;charset=utf-8"
+  );
+}
+
+function downloadJSON(){
+  downloadFile(
+    "meyden-connect-story-prep-contacts.json",
+    JSON.stringify({
+      contacts:contacts,
+      rejected:rejected,
+      lastFileMeta:lastFileMeta,
+      exportedAt:new Date().toISOString()
+    }, null, 2),
+    "application/json"
+  );
+}
+
+function downloadTXT(){
+  if(!document.getElementById("importOutput").value.trim()){
+    generateImportBlock();
+  }
+
+  downloadFile("import-meyden-crm.txt", document.getElementById("importOutput").value, "text/plain");
+}
+
+/* SAUVEGARDE LOCALE */
+
+function saveLocal(){
+  localStorage.setItem("meyden_connect_story_prep", JSON.stringify({
+    contacts:contacts,
+    rejected:rejected,
+    lastFileMeta:lastFileMeta,
+    raw:document.getElementById("rawInput").value,
+    source:document.getElementById("sourceInput").value,
+    event:document.getElementById("eventInput").value
+  }));
+
+  alert("Sauvegarde locale faite.");
+}
+
+function restoreLocal(){
+  const data = JSON.parse(localStorage.getItem("meyden_connect_story_prep") || "{}");
+
+  contacts = data.contacts || [];
+  rejected = data.rejected || [];
+  lastFileMeta = data.lastFileMeta || null;
+
+  document.getElementById("rawInput").value = data.raw || "";
+
+  if(data.source) document.getElementById("sourceInput").value = data.source;
+  if(data.event) document.getElementById("eventInput").value = data.event;
+
+  renderAll();
+}
+
+function clearAll(){
+  if(!confirm("Effacer les données affichées dans l’outil?")) return;
+
+  contacts = [];
+  rejected = [];
+  lastFileMeta = null;
+
+  document.getElementById("rawInput").value = "";
+  document.getElementById("importOutput").value = "";
+  document.getElementById("messageOutput").value = "";
+  document.getElementById("filePreview").textContent = "Aucun fichier ouvert.";
+
+  renderAll();
+}
+
+function loadDemo(){
+  document.getElementById("rawInput").value = `Bruno Matante Mutante - band rock
+@mljphotographie - photo vidéo
+Luc Gauthier, Lujamko Studio, son / studio
+Anthony Morsure - band métal Montréal
+Cabaret des Curiosités - salle spectacle
+Nadine Samuel - art visuel / toiles
+business
+outil de travail
+Selena Vega - maquillage / photo
+Public fidèle 514 - suit les stories`;
+
+  analyzeRaw();
+}
+
+/* DÉMARRAGE */
+
+setupDropZone();
+renderAll();
+restoreLocal();
+</script>
+
+</body>
+</html>
